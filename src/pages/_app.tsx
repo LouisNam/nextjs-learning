@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import Meta from "@/components/Meta";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Manrope } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import "@/styles/globals.scss";
 
 const manrope = Manrope({
@@ -15,7 +16,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <div className={manrope.className}>
         <Meta></Meta>
-        <Component {...pageProps} />
+        <ClerkProvider {...pageProps}>
+          <Component {...pageProps} />
+        </ClerkProvider>
       </div>
     </QueryClientProvider>
   );
