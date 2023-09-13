@@ -14,3 +14,5 @@ export { default as IconCall } from "./IconCall";
 export { default as IconKitchen } from "./IconKitchen";
 export { default as IconBaths } from "./IconBaths";
 export { default as IconBalcony } from "./IconBalcony";
+export { default as IconTune } from "./IconTune";
+export { default as IconCaretDown } from "./IconCaretDown";

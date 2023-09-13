@@ -1,4 +1,5 @@
 import { API_URL } from "@/config";
+import { TFilter } from "@/types/general.types";
 import { IPropertyItemType } from "@/types/property.types";
 import axios from "axios";
 const example = {
@@ -26,13 +27,33 @@ const example = {
     properties: 10,
   },
 };
-export async function getProperties(): Promise<
-  IPropertyItemType[] | null | undefined
+export async function getProperties(params?: TFilter): Promise<
+  | {
+      properties: IPropertyItemType[] | null | undefined;
+      total: number;
+      offset: number;
+      limit: number;
+    }
+  | undefined
 > {
   try {
-    const res = await axios.get(`${API_URL}/property`);
-    if (res.status == 200) return res.data.properties;
-    return [];
+    const res = await axios.get(`${API_URL}/property`, {
+      params,
+    });
+    if (res.status === 200) {
+      return {
+        properties: res.data.properties,
+        total: res.data.total,
+        offset: params?.offset || 0,
+        limit: params?.limit || 0,
+      };
+    }
+    return {
+      properties: [],
+      total: 0,
+      offset: 0,
+      limit: 0,
+    };
   } catch (error) {
     console.error(
       "🚀 ~ file: property.service.ts:10 ~ getProperties ~ error:",
